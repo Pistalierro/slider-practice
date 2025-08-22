@@ -1,0 +1,9 @@
+<div class="slider">
+  <div *ngFor="let slide of slides"
+       [style.background]="slide.background"
+       [style.color]="slide.textColor"
+       class="slide"
+  >
+    {{ slide.text }}
+  </div>
+</div>
