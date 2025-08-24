@@ -1,22 +1,65 @@
-.slider {
+.carousel {
+
   position: relative;
-  width: 100%;
-  min-height: 90vh;
-  overflow: hidden;
-}
 
-.slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.5s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  font-weight: bold;
+  .slider {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
 
-  &.active {
-    opacity: 1;
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.5s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      letter-spacing: 0.15em;
+
+      &-image {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        user-select: none;
+      }
+
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+
+  .controls {
+    position: absolute;
+    display: flex;
+    bottom: 0;
+    justify-content: center;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    gap: 10px;
+
+    .control {
+      width: 100px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: inherit;
+      border-radius: 8px;
+      background-color: grey;
+      color: white;
+      font: bold 1rem "Roboto Slab", serif;
+      transition: background-color 0.3s, color 0.3s ease-in-out;
+
+      &:hover,
+      &:focus {
+        background-color: white;
+        color: grey;
+      }
+    }
   }
 }

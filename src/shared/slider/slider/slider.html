@@ -1,10 +1,31 @@
-<div class="slider">
-  @for (slide of store.slides(); track slide.id; let i = $index) {
-    <div class="slide"
-         [style.background]="slide.background"
-         [style.color]="slide.textColor"
-         [class.active]="i === store.currentSlide()">
-      {{ slide.text }}
-    </div>
-  }
+<div class="carousel">
+
+  <div class="slider">
+    @for (slide of store.slides(); track slide.id; let i = $index) {
+      <div class="slide"
+           [class.active]="i === store.currentSlide()">
+        <img [src]="slide.img" [alt]="slide.text" class="slide-image" draggable="false"
+             [attr.loading]="i === 0 ? 'eager' : 'lazy'" decoding="async">
+      </div>
+    }
+  </div>
+
+  <div class="controls">
+
+    <button (click)="store.prev()" class="control control--prev" type="button">⟨ Prev</button>
+
+    <button (click)="store.togglePlay()" class="control control--pause">
+      @if (store.isPlaying()) {
+        ⏸ Pause
+      } @else {
+        ▶ Play
+      }
+    </button>
+
+    <button (click)="store.next()" class="control control--next" type="button">Next ⟩</button>
+  </div>
+
+  <div class="indicators">
+    
+  </div>
 </div>

@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, inject, OnDestroy} from '@angular/core';
-import {SliderStore} from '../slider.store';
+import {SliderStore} from '../store';
 
 
 @Component({

@@ -6,30 +6,36 @@ export class SliderStore {
 
   readonly slides = signal<SlideInterface[]>(SLIDES);
   readonly currentSlide = signal<number>(0);
-  readonly interval = signal<number>(3000);
+  readonly interval = signal<number>(2000);
   readonly slidesLength = computed(() => this.slides().length);
   readonly isPlaying = signal<boolean>(false);
   private timerId: number | null = null;
 
-  next() {
-    const length = this.slidesLength();
-    this.currentSlide.update(i => (i + 1) % length);
-  }
-
-  prev() {
-    const length = this.slidesLength();
-    this.currentSlide.update(i => (i - 1 + length) % length);
-  }
-
-  goTo(n: number) {
+  goToNth(n: number) {
     const length = this.slidesLength();
     this.currentSlide.set((n + length) % length);
   }
 
+  goTo(i: number) {
+    this.pause();
+    this.goToNth(i);
+  }
+
+  next() {
+    this.pause();
+    this.goToNth(this.currentSlide() + 1);
+  }
+
+  prev() {
+    this.pause();
+    this.goToNth(this.currentSlide() - 1);
+  }
+
+
   play() {
     this.pause();
     this.isPlaying.set(true);
-    this.timerId = setInterval(() => this.next(), this.interval());
+    this.timerId = setInterval(() => this.goToNth(this.currentSlide() + 1), this.interval());
   }
 
   pause() {
@@ -40,10 +46,8 @@ export class SliderStore {
     this.isPlaying.set(false);
   }
 
-  bump() {
-    if (!this.isPlaying()) return;
-    this.pause();
-    this.play();
+  togglePlay(): void {
+    this.isPlaying() ? this.pause() : this.play();
   }
 
   destroy() {
