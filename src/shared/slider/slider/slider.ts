@@ -1,16 +1,23 @@
-import {Component} from '@angular/core';
-import {SlideInterface} from '../types/slide.interface';
-import {SLIDES} from '../data';
-import {NgForOf} from '@angular/common';
+import {AfterViewInit, Component, inject, OnDestroy} from '@angular/core';
+import {SliderStore} from '../slider.store';
+
 
 @Component({
   selector: 'app-slider',
-  imports: [
-    NgForOf
-  ],
+  imports: [],
+  standalone: true,
   templateUrl: './slider.html',
-  styleUrl: './slider.scss'
+  styleUrl: './slider.scss',
+  providers: [SliderStore]
 })
-export class Slider {
-  slides: SlideInterface[] = SLIDES;
+export class Slider implements AfterViewInit, OnDestroy {
+  store = inject(SliderStore);
+
+  ngAfterViewInit() {
+    this.store.init();
+  }
+
+  ngOnDestroy() {
+    this.store.destroy();
+  }
 }

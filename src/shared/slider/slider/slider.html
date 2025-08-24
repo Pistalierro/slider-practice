@@ -1,9 +1,10 @@
 <div class="slider">
-  <div *ngFor="let slide of slides"
-       [style.background]="slide.background"
-       [style.color]="slide.textColor"
-       class="slide"
-  >
-    {{ slide.text }}
-  </div>
+  @for (slide of store.slides(); track slide.id; let i = $index) {
+    <div class="slide"
+         [style.background]="slide.background"
+         [style.color]="slide.textColor"
+         [class.active]="i === store.currentSlide()">
+      {{ slide.text }}
+    </div>
+  }
 </div>
