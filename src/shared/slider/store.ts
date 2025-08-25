@@ -1,14 +1,24 @@
 import {computed, signal} from '@angular/core';
-import {SLIDES} from './data';
+import {SLIDES} from './data/slides';
 import {SlideInterface} from './types/slide.interface';
+import {INDICATORS} from './data/indicators';
+import {IndicatorInterface} from './types/indicator.interface';
 
 export class SliderStore {
 
   readonly slides = signal<SlideInterface[]>(SLIDES);
+  readonly indicators = signal<IndicatorInterface[]>(INDICATORS);
   readonly currentSlide = signal<number>(0);
   readonly interval = signal<number>(2000);
   readonly slidesLength = computed(() => this.slides().length);
   readonly isPlaying = signal<boolean>(false);
+
+  readonly indexById = computed(() => {
+    const map = new Map<number, number>();
+    this.slides().forEach((s, i) => map.set(s.id, i));
+    return map;
+  });
+
   private timerId: number | null = null;
 
   goToNth(n: number) {
@@ -19,6 +29,11 @@ export class SliderStore {
   goTo(i: number) {
     this.pause();
     this.goToNth(i);
+  }
+
+  goToSlideId(id: number) {
+    const idx = this.indexById().get(id);
+    if (idx !== undefined) this.goTo(idx);
   }
 
   next() {

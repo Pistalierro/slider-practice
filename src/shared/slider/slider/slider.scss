@@ -1,11 +1,11 @@
 .carousel {
 
-  position: relative;
 
   .slider {
     position: relative;
+
     width: 100%;
-    min-height: 100vh;
+    min-height: 80vh;
     overflow: hidden;
 
     .slide {
@@ -34,31 +34,97 @@
 
   .controls {
     position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
     display: flex;
-    bottom: 0;
     justify-content: center;
-    left: 0;
     width: 100%;
     padding: 1rem;
     gap: 10px;
 
     .control {
-      width: 100px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: inherit;
-      border-radius: 8px;
-      background-color: grey;
-      color: white;
-      font: bold 1rem "Roboto Slab", serif;
-      transition: background-color 0.3s, color 0.3s ease-in-out;
+      pointer-events: auto; // кликаются только кнопки
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      background: inherit;
+      border: none;
+      color: rgba(white, 0.6);
+      font-size: 4rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: 0.3s;
 
-      &:hover,
-      &:focus {
-        background-color: white;
-        color: grey;
+      &:hover {
+        color: white;
+      }
+
+      &:active {
+        transform: scale(0.96);
+      }
+
+      &:focus-visible {
+        outline: 3px solid #f97316;
+        outline-offset: 2px;
+      }
+
+      &.control--prev {
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      &.control--next {
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      &.control--pause {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  .indicators {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    img {
+      flex: 0 0 auto;
+      width: 120px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s, outline 0.2s;
+      margin-left: 10px;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      &.active {
+        outline: 3px solid #f97316;
       }
     }
   }

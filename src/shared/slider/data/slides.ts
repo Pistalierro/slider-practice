@@ -1,4 +1,4 @@
-import {SlideInterface} from './types/slide.interface';
+import {SlideInterface} from '../types/slide.interface';
 
 export const SLIDES: SlideInterface[] = [
   {

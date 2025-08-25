@@ -8,24 +8,31 @@
              [attr.loading]="i === 0 ? 'eager' : 'lazy'" decoding="async">
       </div>
     }
+
+    <div class="controls">
+      <button (click)="store.prev()" aria-label="Предыдущий" class="control control--prev" type="button">‹</button>
+      <button (click)="store.next()" aria-label="Следующий" class="control control--next" type="button">›</button>
+
+      <button (click)="store.togglePlay()" aria-label="{{ store.isPlaying() ? 'Пауза' : 'Воспроизведение' }}"
+              class="control control--pause"
+              type="button">
+        @if (store.isPlaying()) {
+          ⏸
+        } @else {
+          ▶
+        }
+      </button>
+    </div>
   </div>
 
-  <div class="controls">
 
-    <button (click)="store.prev()" class="control control--prev" type="button">⟨ Prev</button>
-
-    <button (click)="store.togglePlay()" class="control control--pause">
-      @if (store.isPlaying()) {
-        ⏸ Pause
-      } @else {
-        ▶ Play
+  <div #indicatorsContainer class="indicators">
+    <div class="indicator">
+      @for (indicator of store.indicators(); track indicator.id) {
+        <img [src]="indicator.thumbnail" [alt]="indicator.alt"
+             [class.active]="indicator.slideId === store.slides()[store.currentSlide()].id"
+             (click)="store.goToSlideId(indicator.slideId)">
       }
-    </button>
-
-    <button (click)="store.next()" class="control control--next" type="button">Next ⟩</button>
-  </div>
-
-  <div class="indicators">
-    
+    </div>
   </div>
 </div>
